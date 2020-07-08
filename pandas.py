@@ -1,13 +1,26 @@
 # create dataframes
-pd.read_csv('table.csv', header=0) ### returns a pandas dataframe from a csv file with the first row as a the column header
-pd.read_csv('table.csv', nrows=50) ### returns a pandas dataframe from the first 50 rows of a csv file
-pd.read_csv('table.csv', dtypes={'c1':int,'c7':float}) ### returns a pandas dataframe with new datatypes for the columns in the dictoinary
-pd.DataFrame.from_dict(dict_obj, orient='columns') ### returns a dataframe from a dictionary object where keys are columns and valus are row values
-pd.DataFrame.from_dict(dict_obj, orient='index') 
-pd.columns = [...] ### returns a dataframe from a dictionary object where keys are indeces and valus are the remaining row values, then assign column names to the dataframe
+pd.read_csv('table.csv') ### a pandas dataframe, first row is column header
+pd.read_csv('table.csv', names=['col1','col2']) ### a pandas dataframe with given column names
+pd.read_csv('table.csv', skiprows=3) ### a pandas dataframe starting from line 4
+pd.read_csv('table.csv', nrows=50) ### a pandas dataframe from the first 50 rows of a csv file
+pd.read_csv('table.csv', dtypes={'c1':int,'c7':float}) ### a pandas dataframe with new datatypes for the columns in the dictoinary
+pd.read_csv('table.csv', parse_dates=['col7']) ### a pandas dataframe where col7 dtype is converted to date
+pd.DataFrame.from_dict(dict_obj, orient='columns') ### a pandas dataframe from a dictionary object where keys are columns, DEFAULT
+pd.DataFrame.from_dict(dict_obj, orient='index')  ### a pandas dataframe from a dictionary object where keys are rows indeces
 
 # export dataframe
 pd.to_csv('table.csv', index=False) ### exports the dataframe into a csv file without the index column: 0,1,2...
+
+# reading properties of dataframes
+df.shape ### returns the dimensions of the dataframe rows_num, cols_num
+df.dtypes ### returns the columns data types
+df.columns ### returns the columns names
+
+# manipulating column
+df.rename(columns={'old name': 'new_name',...}, inplace = True) ### renames column(s) name(s) in a dataframe
+df.columns = df.columns.str.replace(' ', '_') ### replaces space characters in column names with underscores
+df.drop(['column_name'], axis=1, inplace=True) ### drops a column from the dataframe obj
+df.drop(['row_index'], axis=0, inplace=True) ### drops a row from the dataframe obj
 
 # reading from the dataframe plus statistics
 df.head() ### returns the first 5 rows of a dataframe
@@ -18,28 +31,17 @@ df.column_name.mean() ### returns the mean of the specified column
 df.info(memory_usage='deep') ### returns the memory usage for the dataframe
 df.memory_usage(deep=True) ### returns the memory usage for each column in the dataframe
 df.isnull().sum() ### returns the sum of null values for each column or series in df
+df.notnull().sum() ### returns the sum of not null values for each column or series in df
 
 # iterating the dataframes and the series
 for c in df.column_name: print(c) ### iterates a pandas series, a dataframe column
 for index, row in df.iterrows(): print(index, row.col1, row.col2) ### iterates a pandas dataframe by index and row
 
-# reading properties of dataframes
-df.shape ### returns the dimensions of the dataframe rows_num, cols_num
-df.dtypes ### returns the columns data types
-df.columns ### returns the columns names
-
-# manipulating column
-df.rename(columns={'old name': 'new_name',...}, inplace = True) ### renames column(s) name(s) in a dataframe
-df.columns = df.columns.str.replace(' ', '_') ### replaces space characters in column names with underscores
-df.drop('column_name', axis=1, inplace=True) ### drops a column from the dataframe obj
-
 # sorting rows
-df.sort_values('column_name') ### returns a sorted dataframe object by a column name
-df.column_name.sort_values('column_name', ascending=False) ### returns a decending sorted dataframe object by a column name
+df.sort_values(by=['column_name']) ### returns a sorted dataframe object by a column name
+df.sort_values(by=['column_name'], ascending=False) ### returns a decending sorted dataframe object by a column name
 
-# filtering the data
-df[df.column_name == 'xyz'] ### returns rows based on the condition (returning a series of booleans of True values)
-df[df.column_name.isin(['val1','val2','val3'])] ### returns rows where column name value is one of the values in the list
+# drop None
 df.dropna(how='any', inplace=True) ### drops permenantly all rows that has any null values in any column
 df.dropna(how='all', inplace=True) ### drops permenantly all rows that has null values in all column
 
@@ -64,10 +66,12 @@ pd.set_index('column_name',inplace=True) ### changes the index to the specified 
 df['new_col'] = df['col1'] * df['col7'] * 2 ### creates a new column with a value created from one line of code
 df['new_col'] = df.apply(lambda row: function_name(row['col1'], row['col7']), axis=1) ### creates a new column with a value created from a function
 
-# loc method
+# loc method --> df.loc[rows,cols]
 df.loc[0:50, ['col1','col7']] ### returns a new dataframe with the first 50 rows and the specificed columns
+df.loc[:,['col1','col7']] ### returns a new dataframe with all rows and the two columns
 df.loc[0:50,:] ### returns a new dataframe with the first 50 rows and all columns
-df.loc[df.col1=='something', ['col1','col7']] ### returns a dataframe based on the condition for col1 and dispalays col1 & col7
+df.loc[df.column_name == 'xyz', ['col1','col7']] ### returns rows based on the condition (returning a series of booleans of True values)
+df.loc[df.column_name.isin(['val1','val2','val3']),['col4','col5']] ### returns rows where column name value is one of the values in the list
 round(df.col1,2).astype('int') ### returns a column or series of float values into int after rounding the float
 
 # set_value
