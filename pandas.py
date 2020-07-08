@@ -41,9 +41,16 @@ for index, row in df.iterrows(): print(index, row.col1, row.col2) ### iterates a
 df.sort_values(by=['column_name']) ### returns a sorted dataframe object by a column name
 df.sort_values(by=['column_name'], ascending=False) ### returns a decending sorted dataframe object by a column name
 
-# drop None
-df.dropna(how='any', inplace=True) ### drops permenantly all rows that has any null values in any column
-df.dropna(how='all', inplace=True) ### drops permenantly all rows that has null values in all column
+# drop or fill None
+df.dropna(how='any', inplace=True) ### drops dataframe rows with none values in any column
+df.dropna(how='all', inplace=True) ### drops dataframe rows with none values in all column
+df['col3'].dropna(inplace=True) ## drops series rows with none values
+df.fillna(value=-1, inplace=True) ### fill none values in dataframe with -1
+df['col3'].fillna(value=-1, inplace=True) ### fill none values in series with -1
+
+# drop duplicates
+df.DataFrame.drop_duplicates(subset=None, keep='first', inplace=False) ### drops duplicates all columns
+df.DataFrame.drop_duplicates(subset=['col2'], keep='first', inplace=False) ### drops duplicates of col2
 
 # change column 'series' data type
 df.column_name.astype('int') ### returns a pandas series with a new type of integer
