@@ -2,12 +2,16 @@
 # 1. Convert pandas dataframe into geopandas dataframe
 #----------------------------------------------------
 import pandas as pd
-import geopandas as gp
+import geopandas as gpd
 from shapely.geometry import Point
 
 pd_df = pd.read_csv('./points.csv')
 pd_df['geometry'] = pd_df.apply(lambda row: Point(row.lng, row.lat), axis=1)
-gp_df = gp.GeoDataFrame(pd_df)
+gp_df = gpd.GeoDataFrame(pd_df)
+
+#OR even better
+pd_df = pd.read_csv('./points.csv')
+gp_df = gpd.GeoDataFrame(pd_df, geometry=gpd.points_from_xy(pd_df.Longitude, pd_df.Latitude))
 #----------------------------------------------------
 
 #----------------------------------------------------
