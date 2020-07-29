@@ -11,7 +11,8 @@ gp_df = gpd.GeoDataFrame(pd_df)
 
 #OR even better
 pd_df = pd.read_csv('./points.csv')
-gp_df = gpd.GeoDataFrame(pd_df, geometry=gpd.points_from_xy(pd_df.Longitude, pd_df.Latitude))
+gp_df = gpd.GeoDataFrame(pd_df, geometry=gpd.points_from_xy(pd_df.Longitude, pd_df.Latitude),crs='EPSG:4326')
+
 #----------------------------------------------------
 
 #----------------------------------------------------
