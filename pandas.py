@@ -49,8 +49,8 @@ df.fillna(value=-1, inplace=True) ### fill none values in dataframe with -1
 df['col3'].fillna(value=-1, inplace=True) ### fill none values in series with -1
 
 # drop duplicates
-df.DataFrame.drop_duplicates(subset=None, keep='first', inplace=False) ### drops duplicates all columns
-df.DataFrame.drop_duplicates(subset=['col2'], keep='first', inplace=False) ### drops duplicates of col2
+df.drop_duplicates(subset=None, keep='first', inplace=True) ### drops duplicates all columns
+df.drop_duplicates(subset=['col2'], keep='first', inplace=True) ### drops duplicates of col2
 
 # change column 'series' data type
 df.column_name.astype('int') ### returns a pandas series with a new type of integer
