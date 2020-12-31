@@ -6,6 +6,8 @@ pd.read_csv('table.csv', nrows=50) ### a pandas dataframe from the first 50 rows
 pd.read_csv('table.csv', dtypes={'c1':int,'c7':float}) ### a pandas dataframe with new datatypes for the columns in the dictoinary
 pd.read_csv('table.csv', parse_dates=['col7']) ### a pandas dataframe where col7 dtype is converted to date
 pd.DataFrame.from_dict(dict_obj, orient='columns') ### a pandas dataframe from a dictionary object where keys are columns, DEFAULT
+#ex -> data = {'col_1': [3, 2, 1, 0], 'col_2': ['a', 'b', 'c', 'd']}
+#ex -> pd.DataFrame.from_dict(data)
 pd.DataFrame.from_dict(dict_obj, orient='index')  ### a pandas dataframe from a dictionary object where keys are rows indeces
 
 # export dataframe
